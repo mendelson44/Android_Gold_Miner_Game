@@ -1,8 +1,12 @@
 package com.example.gold_miner_game.activities;
 
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -27,7 +31,7 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
 
 
-    private RelativeLayout[][] relativeLayouts;
+    private RelativeLayout[][] gameTracksArray;
     private RelativeLayout[] track1;
     private RelativeLayout[] track2;
     private RelativeLayout[] track3;
@@ -46,15 +50,14 @@ public class MainActivity extends AppCompatActivity {
     private CardView GoldMiner_cardView_nextLevel;
     private MaterialButton GoldMiner_BTL_level_continue;
     private ShapeableImageView[] GoldMiner_IMG_hearts;
-    private LinearLayoutCompat GoldMiner_LAY_main_gameTrack;
-    private LinearLayoutCompat GoldMiner_LAY_gameTrack_1;
-    private LinearLayoutCompat GoldMiner_LAY_gameTrack_2;
-    private LinearLayoutCompat GoldMiner_LAY_gameTrack_3;
-    private GameManager gameManager;
-    private Handler handler = new Handler(Looper.getMainLooper());
     private boolean isGameRunning = true;
-    private int timeCounter = 0;
     private int speedOfObjects = 850;
+    private final int VIBRATIONTIMING = 300;
+    private final int FIELD_GAME_COLUMNS = 3;
+    private final int FIELD_GAME_ROWS = 7;
+    private final int LIVES = 3;
+    private Handler handler = new Handler(Looper.getMainLooper());
+    private GameManager gameManager;
 
 
     @Override
@@ -64,35 +67,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         findViews();
-        relativeLayouts = getAllRelativeLayouts1();
+        gameTracksArray = getAllGameTracks(FIELD_GAME_ROWS,FIELD_GAME_COLUMNS);
         GoldMiner_BTL_left.setOnClickListener(view -> moveLeft());
         GoldMiner_BTL_right.setOnClickListener(view -> moveRight());
-        gameManager = new GameManager();
+        gameManager = new GameManager(LIVES,FIELD_GAME_COLUMNS,FIELD_GAME_ROWS);
         gameManager.generateLevels();
         UI_nextLevel(gameManager.nextLevel(this));
         GoldMiner_BTL_level_continue.setOnClickListener(view -> startGame());
     }
 
-    private RelativeLayout[][] getAllRelativeLayouts() {
+    private RelativeLayout[][] getAllGameTracks(int rows, int columns) {
 
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 3; j++) {
-                View track = GoldMiner_LAY_main_gameTrack.getChildAt(j);
-                if (track instanceof LinearLayoutCompat) {
-                    View childView = ((LinearLayoutCompat) track).getChildAt(i);
-                    if (childView instanceof RelativeLayout) {
-                        relativeLayouts[i][j] = (RelativeLayout) childView;
-
-                    }
-                }
-            }
-        }
-        return relativeLayouts;
-    }
-    private RelativeLayout[][] getAllRelativeLayouts1() {
-
-        RelativeLayout[][] relativeLayouts = new RelativeLayout[7][3];
-        for (int i = 0; i < 7; i++) {
+        RelativeLayout[][] relativeLayouts = new RelativeLayout[rows][columns];
+        for (int i = 0; i < rows; i++) {
             relativeLayouts[i][0] = track1[i];
             relativeLayouts[i][1] = track2[i];
             relativeLayouts[i][2] = track3[i];
@@ -150,47 +137,36 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.GoldMiner_LAY_gameTrack_3_index_7)
         };
 
-        GoldMiner_LAY_main_gameTrack = findViewById(R.id.GoldMiner_LAY_main_gameTrack);
-        GoldMiner_LAY_gameTrack_1 = findViewById(R.id.GoldMiner_LAY_gameTrack_1);
-        GoldMiner_LAY_gameTrack_2 = findViewById(R.id.GoldMiner_LAY_gameTrack_2);
-        GoldMiner_LAY_gameTrack_3 = findViewById(R.id.GoldMiner_LAY_gameTrack_3);
-
     }
 
     public void moveRight() {
         int currentTrack = gameManager.getMainCharacter().getPositionX();
         int newTrack = currentTrack + 1;
-
-
         if (newTrack < gameManager.getFieldColumns()) {
-            changeLayoutOfMainCharacterIMG(currentTrack, newTrack);
-            // Update the lane in the game manager
+            UI_changePositionOfMainCharacterIMG(currentTrack, newTrack);
+            // Update the position x in the Main Character
             gameManager.getMainCharacter().setPositionX(newTrack);
         }
     }
 
     public void moveLeft() {
-
         int currentTrack = gameManager.getMainCharacter().getPositionX();
         int newTrack = currentTrack - 1;
-
-
         if (newTrack >= 0) {
-            changeLayoutOfMainCharacterIMG(currentTrack, newTrack);
-            // Update the lane in the game manager
+            UI_changePositionOfMainCharacterIMG(currentTrack, newTrack);
+            // Update the position x in the Main Character
             gameManager.getMainCharacter().setPositionX(newTrack);
         }
     }
 
-    public void changeLayoutOfMainCharacterIMG(int currentTrack, int newTrack) {
+    public void UI_changePositionOfMainCharacterIMG(int currentTrack, int newTrack) {
 
-        RelativeLayout currentRelativeLayout = relativeLayouts[6][currentTrack];
+        RelativeLayout currentRelativeLayout = gameTracksArray[6][currentTrack];
         currentRelativeLayout.removeView(GoldMiner_IMG_character);
-        RelativeLayout newRelativeLayout = relativeLayouts[6][newTrack];
+        RelativeLayout newRelativeLayout = gameTracksArray[6][newTrack];
         newRelativeLayout.addView(GoldMiner_IMG_character);
 
     }
-
 
     private void startGame() {
         GoldMiner_cardView_nextLevel.setVisibility(View.INVISIBLE);
@@ -201,7 +177,6 @@ public class MainActivity extends AppCompatActivity {
                 if (!isGameRunning) {
                     return; // Stop the loop if the game is not running
                 }
-                timeCounter++;
                 handler.postDelayed(this, speedOfObjects); // Schedule the next iteration
                 ObstacleViewMovement();
                 if(gameManager.getNumberOfRunningObstacles() < gameManager.getMaxNumberOfGameObstacles() && isGameRunning) {
@@ -218,6 +193,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void createNewGameFromLevel1() {
         gameManager.setCurrentLevel(0);
+        gameManager.setLife(LIVES);
+        gameManager.setNumOfCollisions(0);
+        UI_resetHeartsImages();
         UI_nextLevel(gameManager.nextLevel(this));
     }
 
@@ -236,12 +214,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void addScore() {
-
-        GoldMiner_LBL_money.setText(String.valueOf(gameManager.getMoney()));
-
-    }
-
     public void ObstacleViewMovement() {
         UI_removeAllRunningObstacles();
         boolean collision = gameManager.checkCollision();
@@ -257,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
         for (GameObstacle gameObstacle : gameManager.getRunningObstacles()) {
             int posX = gameObstacle.getPositionX();
             int posY = gameObstacle.getPositionY();
-            relativeLayouts[posY][posX].removeView(gameObstacle.getShapeableImageView());
+            gameTracksArray[posY][posX].removeView(gameObstacle.getShapeableImageView());
         }
 
     }
@@ -269,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
             int posY = gameObstacle.getPositionY();
             if (posY == 0) {
                 gameObstacle.getShapeableImageView().setVisibility(View.VISIBLE);
-                relativeLayouts[posY][posX].addView(gameObstacle.getShapeableImageView());
+                gameTracksArray[posY][posX].addView(gameObstacle.getShapeableImageView());
             }
         }
     }
@@ -278,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
         for (GameObstacle gameObstacle : gameManager.getRunningObstacles()) {
             int posX = gameObstacle.getPositionX();
             int posY = gameObstacle.getPositionY();
-            relativeLayouts[posY][posX].addView(gameObstacle.getShapeableImageView());
+            gameTracksArray[posY][posX].addView(gameObstacle.getShapeableImageView());
         }
 
     }
@@ -286,12 +258,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void UI_collision(int collisionType) {
 
-        if (collisionType == 1) {
+        if (collisionType == 1) { // collision type 1 for bad obstacle
             refreshHeartImages();
+            vibration();
             createToast("I need more Gold");
         }
-        if (collisionType == 3) {
-            addScore();
+        if (collisionType == 2) { //collision type 2 for good obstacle
+            GoldMiner_LBL_money.setText(String.valueOf(gameManager.getMoney()));
 
         }
         if(gameManager.getMoney() >= gameManager.getTarget()){
@@ -302,13 +275,23 @@ public class MainActivity extends AppCompatActivity {
 
 
         if(gameManager.getLife() == 0){
-            //gameManager.setLife(3);
+            isGameRunning = false;
+            UI_removeAllRunningObstacles();
+            createNewGameFromLevel1();
         }
 
     }
 
+    private void UI_resetHeartsImages() {
+
+        for (int i = 0 ; i < LIVES ; i++) {
+            GoldMiner_IMG_hearts[i].setVisibility(View.VISIBLE);
+        }
+    }
+
     public void refreshHeartImages() {
 
+        // removing heart view in the game
         if (gameManager.getLife() >= 0) {
             GoldMiner_IMG_hearts[gameManager.getNumOfCollisions() - 1].setVisibility(View.INVISIBLE);
         }
@@ -322,6 +305,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void UI_nextLevel(Level level){
 
+        // updating the UI for the next level
+
         GoldMiner_cardView_nextLevel.setVisibility(View.VISIBLE);
         GoldMiner_LBL_target.setText(String.valueOf(level.getTarget()));
         GoldMiner_LBL_main_levelView.setText(String.valueOf(gameManager.getCurrentLevel()));
@@ -331,10 +316,21 @@ public class MainActivity extends AppCompatActivity {
         GoldMiner_LBL_level_rock.setText(String.valueOf(level.getNumRock()));
         GoldMiner_LBL_level_gold.setText(String.valueOf(level.getNumGold()));
         GoldMiner_LBL_level_moneyBag.setText(String.valueOf(level.getNumMoneyBag()));
-        this.setSpeedOfObjects(speedOfObjects - 10*gameManager.getCurrentLevel());
+        //this.setSpeedOfObjects(speedOfObjects - 10*gameManager.getCurrentLevel());
     }
 
     public void setSpeedOfObjects(int speedOfObjects) {
         this.speedOfObjects = speedOfObjects;
+    }
+
+    public void vibration() {
+
+        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            v.vibrate(VibrationEffect.createOneShot(VIBRATIONTIMING, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            v.vibrate(VIBRATIONTIMING);
+        }
+
     }
 }

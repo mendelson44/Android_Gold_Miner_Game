@@ -8,23 +8,26 @@
     tools:context=".activities.MainActivity">
 
     <!--- score layout -->
+
+
+    <!--- heart layout -->
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/GoldMiner_LAY_scoreLayout"
-        android:layout_width="240dp"
-        android:layout_height="80dp"
+        android:layout_width="188dp"
+        android:layout_height="72dp"
         android:layout_alignParentStart="true"
+        android:layout_marginStart="1dp"
         android:layout_marginTop="2dp"
-        android:layout_marginStart="2dp"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/GoldMiner_LAY_money"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="2dp"
             android:layout_marginStart="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_weight="1"
             android:orientation="horizontal">
 
             <com.google.android.material.textview.MaterialTextView
@@ -34,8 +37,8 @@
                 android:layout_weight="1"
                 android:text="Money"
                 android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="22sp"/>
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/GoldMiner_IMG_dollar"
@@ -49,10 +52,10 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:text="0"
                 android:textColor="#298A00"
-                android:gravity="center_vertical"
-                android:textSize="20sp"
+                android:textSize="12sp"
                 android:textStyle="bold" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -60,10 +63,10 @@
             android:id="@+id/GoldMiner_LAY_target"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="2dp"
             android:layout_marginStart="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_weight="1"
             android:orientation="horizontal">
 
             <com.google.android.material.textview.MaterialTextView
@@ -73,8 +76,8 @@
                 android:layout_weight="1"
                 android:text="Target"
                 android:textColor="@color/black"
-                android:textSize="22sp"
-                android:textStyle="bold"/>
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/GoldMiner_IMG_target"
@@ -91,20 +94,17 @@
                 android:gravity="center_vertical"
                 android:text="100"
                 android:textColor="#CDD57F00"
-                android:textSize="20sp"
+                android:textSize="12sp"
                 android:textStyle="bold" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-
-    <!--- heart layout -->
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/GoldMiner_LAY_heartLayout"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
+        android:layout_width="88dp"
+        android:layout_height="32dp"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="6dp"
         android:layout_marginEnd="24dp"
@@ -139,8 +139,8 @@
     <!--- level view layout -->
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/GoldMiner_LAY_main_levelView"
-        android:layout_width="100dp"
-        android:layout_height="20dp"
+        android:layout_width="88dp"
+        android:layout_height="32dp"
         android:layout_alignParentEnd="true"
         android:layout_below="@id/GoldMiner_LAY_heartLayout"
         android:layout_marginEnd="24dp"
@@ -150,9 +150,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Level : "
+            android:text="Level"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="12sp"
             android:textStyle="bold"/>
 
         <com.google.android.material.textview.MaterialTextView
@@ -161,8 +161,9 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="0"
+            android:gravity="center_horizontal"
             android:textColor="#042AFF"
-            android:textSize="16sp"
+            android:textSize="12sp"
             android:textStyle="bold" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -317,8 +318,7 @@
                     android:id="@+id/GoldMiner_IMG_character"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:layout_centerInParent="true"
-                    android:scaleType="fitCenter"
+                    android:layout_centerHorizontal="true"
                     android:src="@drawable/gold_miner_character" />
 
             </RelativeLayout>
@@ -401,6 +401,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
         tools:context=".activities.MainActivity">
 
         <!--- space layout -->
@@ -416,9 +417,8 @@
             android:id="@+id/GoldMiner_BTL_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="64dp"
+            android:layout_marginStart="40dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:contentDescription="left Button"
             app:backgroundTint="#FFE4B938"
@@ -431,7 +431,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="64dp"
+            android:layout_marginEnd="40dp"
             android:layout_marginBottom="16dp"
             android:contentDescription="right Button"
             app:backgroundTint="#FFE4B938"
@@ -472,7 +472,7 @@
                     android:layout_centerVertical="true"
                     android:text="level"
                     android:textColor="@color/black"
-                    android:textSize="32sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
 
@@ -506,7 +506,7 @@
                         android:layout_weight="1"
                         android:text="100"
                         android:textColor="@color/black"
-                        android:textSize="32sp"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <com.google.android.material.imageview.ShapeableImageView
@@ -524,7 +524,7 @@
                         android:layout_weight="1"
                         android:text="100"
                         android:textColor="@color/black"
-                        android:textSize="32sp"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -560,7 +560,7 @@
                         android:layout_weight="1"
                         android:text="100"
                         android:textColor="@color/black"
-                        android:textSize="32sp"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <com.google.android.material.imageview.ShapeableImageView
@@ -578,7 +578,7 @@
                         android:layout_weight="1"
                         android:text="100"
                         android:textColor="@color/black"
-                        android:textSize="32sp"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -599,7 +599,7 @@
                     android:layout_centerVertical="true"
                     android:backgroundTint="@color/black"
                     android:text="CONTINUE"
-                    android:textSize="14sp"
+                    android:textSize="8sp"
                     app:cornerRadius="10dp">
 
                 </com.google.android.material.button.MaterialButton>

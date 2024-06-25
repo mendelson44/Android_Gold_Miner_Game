@@ -12,7 +12,6 @@ import com.example.gold_miner_game.model.Level;
 import com.example.gold_miner_game.model.mainCharacter;
 import com.google.android.material.imageview.ShapeableImageView;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -24,9 +23,9 @@ import java.util.Stack;
 
 public class GameManager {
 
-    private int life = 3;
-    private int fieldColumns = 3;
-    private int fieldRows = 7;
+    private int life;
+    private int fieldColumns;
+    private int fieldRows;
     private mainCharacter mainCharacter;
     private Stack<GameObstacle> gameObstacles;
     private Set<GameObstacle> runningObstacles;
@@ -40,8 +39,11 @@ public class GameManager {
     private int money = 0;
     private int target = 0;
 
-    public GameManager() {
+    public GameManager(int life, int fieldColumns, int fieldRows) {
 
+        this.life = life;
+        this.fieldColumns = fieldColumns;
+        this.fieldRows = fieldRows;
         mainCharacter = new mainCharacter();
         gameObstacles = new Stack<>();
         runningObstacles = new HashSet<>();
@@ -53,46 +55,36 @@ public class GameManager {
         return life;
     }
 
-    public GameManager setLife(int life) {
+    public void setLife(int life) {
         this.life = life;
-        return this;
     }
-
 
     public int getFieldColumns() {
         return fieldColumns;
     }
 
-    public GameManager setFieldColumns(int fieldColumns) {
+    public void setFieldColumns(int fieldColumns) {
         this.fieldColumns = fieldColumns;
-        return this;
     }
 
     public int getFieldRows() {
         return fieldRows;
     }
 
-    public GameManager setFieldRows(int fieldRows) {
+    public void setFieldRows(int fieldRows) {
         this.fieldRows = fieldRows;
-        return this;
     }
 
     public mainCharacter getMainCharacter() {
         return mainCharacter;
     }
 
-
     public int getNumOfCollisions() {
         return numOfCollisions;
     }
 
-    public int getMoney() {
-        return money;
-    }
-
-    public GameManager setMoney(int money) {
-        this.money = money;
-        return this;
+    public void setNumOfCollisions(int numOfCollisions) {
+        this.numOfCollisions = numOfCollisions;
     }
 
     public void setGameObstacles(Stack<GameObstacle> gameObstacles) {
@@ -103,13 +95,20 @@ public class GameManager {
         this.runningObstacles = runningObstacles;
     }
 
+    public int getMoney() {
+        return money;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
+    }
+
     public int getTarget() {
         return target;
     }
 
-    public GameManager setTarget(int target) {
+    public void setTarget(int target) {
         this.target = target;
-        return this;
     }
 
     public int getCurrentLevel() {
@@ -120,7 +119,37 @@ public class GameManager {
         return collisionType;
     }
 
+    public int getNumberOfRunningObstacles() {
+        return numberOfRunningObstacles;
+    }
+
+    public void setCurrentLevel(int currentLevel) {
+        this.currentLevel = currentLevel;
+    }
+
+    public void setNumberOfRunningObstacles(int numberOfRunningObstacles) {
+        this.numberOfRunningObstacles = numberOfRunningObstacles;
+    }
+
+    public Stack<GameObstacle> getGameObstacles() {
+        return gameObstacles;
+    }
+
+    public Set<GameObstacle> getRunningObstacles() {
+        return runningObstacles;
+    }
+
+    public int getMaxNumberOfGameObstacles() {
+        return maxNumberOfGameObstacles;
+    }
+
+
     public void addAllGameObstacles(Context context) {
+
+        // EXPLAIN:
+        // each step of level the game create the numbers of obstacles needed and push each obstacle to a stack
+        // after this the game shuffles the stack.
+
         Context prefs = context.getApplicationContext();
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
                 256,
@@ -161,6 +190,11 @@ public class GameManager {
 
     public void addGameObstacleToRunning (){
 
+        // EXPLAIN:
+        // when the game is running each loop of the game i add an running obstacle to the game
+        // by pulling obstacle from the stack and add to a set array
+        // that handle the movement of the obstacles in the game.
+
         if(gameObstacles.isEmpty())
             return;
         GameObstacle gameObstacle = gameObstacles.pop();
@@ -176,31 +210,6 @@ public class GameManager {
         return randomNumber;
     }
 
-
-
-    public int getNumberOfRunningObstacles() {
-        return numberOfRunningObstacles;
-    }
-
-    public void setCurrentLevel(int currentLevel) {
-        this.currentLevel = currentLevel;
-    }
-
-    public void setNumberOfRunningObstacles(int numberOfRunningObstacles) {
-        this.numberOfRunningObstacles = numberOfRunningObstacles;
-    }
-
-    public Stack<GameObstacle> getGameObstacles() {
-        return gameObstacles;
-    }
-
-    public Set<GameObstacle> getRunningObstacles() {
-        return runningObstacles;
-    }
-
-    public int getMaxNumberOfGameObstacles() {
-        return maxNumberOfGameObstacles;
-    }
 
     public void obstaclesMovement() {
         Iterator<GameObstacle> iterator = runningObstacles.iterator();
@@ -221,16 +230,16 @@ public class GameManager {
             if (this.mainCharacter.getPositionX() == gameObstacle.getPositionX() && this.mainCharacter.getPositionY() == (gameObstacle.getPositionY() + 1) && (gameObstacle.getCurrentType() == 1 || gameObstacle.getCurrentType() == 2) ){
                 numOfCollisions++;
                 life--;
-                collisionType= 1;
+                collisionType = 1;
                 return true;
             }else if(this.mainCharacter.getPositionX() == gameObstacle.getPositionX() && this.mainCharacter.getPositionY() == (gameObstacle.getPositionY() + 1) && gameObstacle.getCurrentType() == 3){
-                money += 5;
-                collisionType= 3;
+                money += 10;
+                collisionType = 2;
                 return true;
             }
             else if(this.mainCharacter.getPositionX() == gameObstacle.getPositionX() && this.mainCharacter.getPositionY() == (gameObstacle.getPositionY() + 1) && gameObstacle.getCurrentType() == 4){
-            money += 1000;
-            collisionType= 3;
+            money += randomNumber(1000);
+            collisionType = 2;
             return true;
             }
         }
@@ -258,7 +267,7 @@ public class GameManager {
 
         for (int i = 0 ; i < LEVELS_COUNT ; i++) {
 
-            Level newLevel = new Level(999+i,5,10,10,2);
+            Level newLevel = new Level((999+(i*100)),i+4,i+9,(40 - (i*2)),3);
             levels[i] = newLevel;        }
 
     }
