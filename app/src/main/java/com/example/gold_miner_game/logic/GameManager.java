@@ -2,7 +2,6 @@ package com.example.gold_miner_game.logic;
 
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -162,7 +161,7 @@ public class GameManager {
         obstacleImages.put(1, R.drawable.gold_miner_tnt);
         obstacleImages.put(2, R.drawable.gold_miner_rock);
         obstacleImages.put(3, R.drawable.gold_miner_gold);
-        obstacleImages.put(4, R.drawable.gold_miner_moneybag);
+        obstacleImages.put(4, R.drawable.gold_miner_diamond);
 
         for (int i = 1; i < level.length; i++) {
             for (int j = 0; j < level[i]; j++) {
@@ -184,7 +183,7 @@ public class GameManager {
 
     private int[] getCurrentLevelArray() {
         Level level = levels[currentLevel];
-        int[] levelArray = {level.getTarget(),level.getNumTNT(),level.getNumRock(),level.getNumGold(),level.getNumMoneyBag()};
+        int[] levelArray = {level.getTarget(),level.getNumTNT(),level.getNumRock(),level.getNumGold(),level.getNumDiamond()};
         return levelArray;
     }
 
@@ -238,7 +237,7 @@ public class GameManager {
                 return true;
             }
             else if(this.mainCharacter.getPositionX() == gameObstacle.getPositionX() && this.mainCharacter.getPositionY() == (gameObstacle.getPositionY() + 1) && gameObstacle.getCurrentType() == 4){
-            money += randomNumber(1000);
+            money += 500;
             collisionType = 2;
             return true;
             }
@@ -267,9 +266,9 @@ public class GameManager {
 
         for (int i = 0 ; i < LEVELS_COUNT ; i++) {
 
-            Level newLevel = new Level((999+(i*100)),i+4,i+9,(40 - (i*2)),3);
-            levels[i] = newLevel;        }
-
+            Level newLevel = new Level((900+(i*100)),i+4,i+9,(42 - (i*2)),3);
+            levels[i] = newLevel;
+        }
     }
 
     public boolean checkEndGame() {

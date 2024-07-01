@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -16,8 +17,8 @@
         android:layout_width="188dp"
         android:layout_height="72dp"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -250,6 +251,14 @@
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/GoldMiner_LAY_gameTrack_1_index_8"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </RelativeLayout>
+
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -309,6 +318,14 @@
 
             <RelativeLayout
                 android:id="@+id/GoldMiner_LAY_gameTrack_2_index_7"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/GoldMiner_LAY_gameTrack_2_index_8"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1">
@@ -388,6 +405,160 @@
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/GoldMiner_LAY_gameTrack_3_index_8"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/GoldMiner_LAY_gameTrack_4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/GoldMiner_LAY_gameTrack_4_index_1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/GoldMiner_LAY_gameTrack_4_index_2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/GoldMiner_LAY_gameTrack_4_index_3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/GoldMiner_LAY_gameTrack_4_index_4"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/GoldMiner_LAY_gameTrack_4_index_5"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/GoldMiner_LAY_gameTrack_4_index_6"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/GoldMiner_LAY_gameTrack_4_index_7"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/GoldMiner_LAY_gameTrack_4_index_8"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/GoldMiner_LAY_gameTrack_5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/GoldMiner_LAY_gameTrack_5_index_1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/GoldMiner_LAY_gameTrack_5_index_2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/GoldMiner_LAY_gameTrack_5_index_3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/GoldMiner_LAY_gameTrack_5_index_4"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/GoldMiner_LAY_gameTrack_5_index_5"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/GoldMiner_LAY_gameTrack_5_index_6"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/GoldMiner_LAY_gameTrack_5_index_7"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/GoldMiner_LAY_gameTrack_5_index_8"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </RelativeLayout>
+
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 
@@ -441,6 +612,94 @@
     </RelativeLayout>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/MAIN_GAMEOVER_CARDVIEW"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_marginHorizontal="50dp"
+        android:padding="10dp"
+        android:layout_centerInParent="true"
+        app:cardCornerRadius="10dp">
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/space_background"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/main_LBLCARD_GAMEOVER"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:text="GAME OVER!"
+                android:textAlignment="center"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="30dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/MAIN_LBLCARD_FINALSCORE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:text="Final Score:"
+                    android:textAlignment="center"
+                    android:textColor="@color/common_google_signin_btn_text_dark_focused" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_marginTop="2dp"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/gold_miner_character" />
+
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/MAIN_EDITTEXT_NAME"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="Enter Your Name"
+                android:textSize="24sp"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                android:layout_gravity="center_horizontal"
+                android:layout_centerHorizontal="true"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/MAIN_CARDVIEW_BTN_OK"
+                android:layout_width="120dp"
+                android:layout_height="60dp"
+                android:textSize="24sp"
+                android:backgroundTint="@color/common_google_signin_btn_text_dark_focused"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="15dp"
+                android:text="OK"
+                app:cornerRadius="10dp">
+
+            </com.google.android.material.button.MaterialButton>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
         android:id="@+id/GoldMiner_cardView_nextLevel"
         android:layout_width="wrap_content"
         android:layout_height="353dp"
@@ -474,7 +733,6 @@
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
-
 
             </RelativeLayout>
 
@@ -515,7 +773,7 @@
                         android:layout_height="44dp"
                         android:layout_weight="1"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/gold_miner_moneybag" />
+                        android:src="@drawable/gold_miner_diamond" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/GoldMiner_LBL_level_moneyBag"
@@ -597,10 +855,10 @@
                     android:layout_height="60dp"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:backgroundTint="@color/black"
                     android:text="CONTINUE"
                     android:textSize="8sp"
-                    app:cornerRadius="10dp">
+                    app:cornerRadius="10dp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton">
 
                 </com.google.android.material.button.MaterialButton>
 
@@ -610,6 +868,7 @@
 
 
     </androidx.cardview.widget.CardView>
+
 
 
 </RelativeLayout>

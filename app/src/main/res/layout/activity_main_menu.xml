@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/gold_miner_main_menu">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/GoldMiner_Main_Menu_LAY"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/GoldMiner_Main_Menu_LAY_index_1"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/GoldMiner_Main_Menu_IMG_woodPointer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/gold_miner_wooden_pointer_board" />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/GoldMiner_Main_Menu_BTN_startGame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="START GAME"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="65dp"
+                android:background="@android:color/transparent"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="13dp"
+                android:rotation="-7"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/GoldMiner_Main_Menu_BTN_scoreBoard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SCORE BOARD"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="128dp"
+                android:background="@android:color/transparent"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="13dp"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/GoldMiner_Main_Menu_BTN_Mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MODE"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="198dp"
+                android:background="@android:color/transparent"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="13dp"
+                android:rotation="14"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/GoldMiner_Main_Menu_LAY_index_2"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/GoldMiner_Main_Menu_IMG_character"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scaleType="fitEnd"
+                    android:src="@drawable/gold_miner_character" />
+
+                <RelativeLayout
+                    android:id="@+id/GoldMiner_Main_Menu_LAY_mode"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/GoldMiner_Main_Menu_IMG_mode_options"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/gold_miner_main_menu_mode" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/GoldMiner_Main_Menu_BTN_mode_fast"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="FAST"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="70dp"
+                        android:background="@android:color/transparent"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"
+                        android:textSize="16dp"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/GoldMiner_Main_Menu_BTN_mode_slow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SLOW"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="114dp"
+                        android:background="@android:color/transparent"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"
+                        android:textSize="16dp"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/GoldMiner_Main_Menu_BTN_mode_sensors"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="157dp"
+                        android:background="@android:color/transparent"
+                        android:text="SENSORS"
+                        android:textColor="@android:color/white"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </RelativeLayout>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</RelativeLayout>

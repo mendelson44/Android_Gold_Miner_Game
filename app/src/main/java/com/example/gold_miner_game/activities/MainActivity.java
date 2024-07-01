@@ -1,6 +1,7 @@
 package com.example.gold_miner_game.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,18 +15,28 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.cardview.widget.CardView;
 
 import com.example.gold_miner_game.R;
 import com.example.gold_miner_game.logic.GameManager;
+import com.example.gold_miner_game.logic.SensorManager;
+import com.example.gold_miner_game.model.AllPlayers;
+import com.example.gold_miner_game.model.Player;
 import com.example.gold_miner_game.model.GameObstacle;
 import com.example.gold_miner_game.model.Level;
+import com.example.gold_miner_game.logic.CallBack_CharacterMovement;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     private RelativeLayout[] track1;
     private RelativeLayout[] track2;
     private RelativeLayout[] track3;
+    private RelativeLayout[] track4;
+    private RelativeLayout[] track5;
 
     private FloatingActionButton GoldMiner_BTL_left;
     private FloatingActionButton GoldMiner_BTL_right;
@@ -50,15 +63,29 @@ public class MainActivity extends AppCompatActivity {
     private CardView GoldMiner_cardView_nextLevel;
     private MaterialButton GoldMiner_BTL_level_continue;
     private ShapeableImageView[] GoldMiner_IMG_hearts;
-    private boolean isGameRunning = true;
-    private int speedOfObjects = 850;
-    private final int VIBRATIONTIMING = 300;
-    private final int FIELD_GAME_COLUMNS = 3;
-    private final int FIELD_GAME_ROWS = 7;
-    private final int LIVES = 3;
-    private Handler handler = new Handler(Looper.getMainLooper());
-    private GameManager gameManager;
 
+    //cardVIEW Variables:
+    private MaterialButton MAIN_CARDVIEW_BTN_OK;
+    private CardView MAIN_GAMEOVER_CARDVIEW;
+    private MaterialTextView MAIN_LBLCARD_FINALSCORE;
+    private AppCompatEditText MAIN_EDITTEXT_NAME;
+
+    private boolean isGameRunning = true;
+    private boolean sensors;
+    private boolean slow;
+    private int speedOfObjects;
+    private double lat;
+    private double lng;
+    private final int VIBRATIONTIMING = 300;
+    private final int FIELD_GAME_COLUMNS = 5;
+    private final int FIELD_GAME_ROWS = 8;
+    private final int LIVES = 3;
+
+
+    private Handler handler = new Handler(Looper.getMainLooper());
+    private SensorManager sensorsManager;
+    private GameManager gameManager;
+    AllPlayers allPlayers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,13 +94,65 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         findViews();
+        getGameMode();
+        adjustGameMode();
+        showCardOfEndGame(false);
+        AllPlayers allPlayers = AllPlayers.getInstance();
         gameTracksArray = getAllGameTracks(FIELD_GAME_ROWS,FIELD_GAME_COLUMNS);
         GoldMiner_BTL_left.setOnClickListener(view -> moveLeft());
         GoldMiner_BTL_right.setOnClickListener(view -> moveRight());
+        MAIN_CARDVIEW_BTN_OK.setOnClickListener(view -> savePlayerScoreAndGoToPlayersActivity());
         gameManager = new GameManager(LIVES,FIELD_GAME_COLUMNS,FIELD_GAME_ROWS);
         gameManager.generateLevels();
         UI_nextLevel(gameManager.nextLevel(this));
         GoldMiner_BTL_level_continue.setOnClickListener(view -> startGame());
+    }
+
+    private void getGameMode() {
+        Intent intent = getIntent();
+        String jsonString = intent.getStringExtra("jsonString");
+        try {
+            JSONObject jsonObject = new JSONObject(jsonString);
+
+            sensors = jsonObject.getBoolean("sensors");
+            slow = jsonObject.getBoolean("slow");
+            lat = jsonObject.getDouble("lat");
+            lng = jsonObject.getDouble("lng");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    private void adjustGameMode() {
+        if (slow) {
+            speedOfObjects = 850;
+        } else {
+            speedOfObjects = 750;
+        }
+        if (sensors) {
+            initMovementSensors();
+            GoldMiner_BTL_left.setVisibility(View.INVISIBLE);
+            GoldMiner_BTL_right.setVisibility(View.INVISIBLE);
+            sensorsManager.start();
+        }
+    }
+
+    private void initMovementSensors() {
+        sensorsManager = new SensorManager(this, new CallBack_CharacterMovement() {
+
+            @Override
+            public void CharacterMoveRight() {
+                moveRight();
+            }
+
+            @Override
+            public void CharacterMoveLeft() {
+                moveLeft();
+            }
+        });
     }
 
     private RelativeLayout[][] getAllGameTracks(int rows, int columns) {
@@ -83,6 +162,8 @@ public class MainActivity extends AppCompatActivity {
             relativeLayouts[i][0] = track1[i];
             relativeLayouts[i][1] = track2[i];
             relativeLayouts[i][2] = track3[i];
+            relativeLayouts[i][3] = track4[i];
+            relativeLayouts[i][4] = track5[i];
         }
         return relativeLayouts;
     }
@@ -102,6 +183,10 @@ public class MainActivity extends AppCompatActivity {
         GoldMiner_cardView_nextLevel = findViewById(R.id.GoldMiner_cardView_nextLevel);
         GoldMiner_LBL_level = findViewById(R.id.GoldMiner_LBL_level);
         GoldMiner_BTL_level_continue = findViewById(R.id.GoldMiner_BTL_level_continue);
+        MAIN_GAMEOVER_CARDVIEW = findViewById(R.id.MAIN_GAMEOVER_CARDVIEW);
+        MAIN_LBLCARD_FINALSCORE = findViewById(R.id.MAIN_LBLCARD_FINALSCORE);
+        MAIN_CARDVIEW_BTN_OK = findViewById(R.id.MAIN_CARDVIEW_BTN_OK);
+        MAIN_EDITTEXT_NAME = findViewById(R.id.MAIN_EDITTEXT_NAME);
 
         GoldMiner_IMG_hearts = new ShapeableImageView[]{
                 findViewById(R.id.GoldMiner_IMG_heart1),
@@ -116,7 +201,8 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.GoldMiner_LAY_gameTrack_1_index_4),
                 findViewById(R.id.GoldMiner_LAY_gameTrack_1_index_5),
                 findViewById(R.id.GoldMiner_LAY_gameTrack_1_index_6),
-                findViewById(R.id.GoldMiner_LAY_gameTrack_1_index_7)
+                findViewById(R.id.GoldMiner_LAY_gameTrack_1_index_7),
+                findViewById(R.id.GoldMiner_LAY_gameTrack_1_index_8)
         };
         track2 = new RelativeLayout[] {
                 findViewById(R.id.GoldMiner_LAY_gameTrack_2_index_1),
@@ -125,7 +211,8 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.GoldMiner_LAY_gameTrack_2_index_4),
                 findViewById(R.id.GoldMiner_LAY_gameTrack_2_index_5),
                 findViewById(R.id.GoldMiner_LAY_gameTrack_2_index_6),
-                findViewById(R.id.GoldMiner_LAY_gameTrack_2_index_7)
+                findViewById(R.id.GoldMiner_LAY_gameTrack_2_index_7),
+                findViewById(R.id.GoldMiner_LAY_gameTrack_2_index_8)
         };
         track3 = new RelativeLayout[] {
                 findViewById(R.id.GoldMiner_LAY_gameTrack_3_index_1),
@@ -134,7 +221,28 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.GoldMiner_LAY_gameTrack_3_index_4),
                 findViewById(R.id.GoldMiner_LAY_gameTrack_3_index_5),
                 findViewById(R.id.GoldMiner_LAY_gameTrack_3_index_6),
-                findViewById(R.id.GoldMiner_LAY_gameTrack_3_index_7)
+                findViewById(R.id.GoldMiner_LAY_gameTrack_3_index_7),
+                findViewById(R.id.GoldMiner_LAY_gameTrack_3_index_8)
+        };
+        track4 = new RelativeLayout[] {
+                findViewById(R.id.GoldMiner_LAY_gameTrack_4_index_1),
+                findViewById(R.id.GoldMiner_LAY_gameTrack_4_index_2),
+                findViewById(R.id.GoldMiner_LAY_gameTrack_4_index_3),
+                findViewById(R.id.GoldMiner_LAY_gameTrack_4_index_4),
+                findViewById(R.id.GoldMiner_LAY_gameTrack_4_index_5),
+                findViewById(R.id.GoldMiner_LAY_gameTrack_4_index_6),
+                findViewById(R.id.GoldMiner_LAY_gameTrack_4_index_7),
+                findViewById(R.id.GoldMiner_LAY_gameTrack_4_index_8)
+        };
+        track5 = new RelativeLayout[] {
+                findViewById(R.id.GoldMiner_LAY_gameTrack_5_index_1),
+                findViewById(R.id.GoldMiner_LAY_gameTrack_5_index_2),
+                findViewById(R.id.GoldMiner_LAY_gameTrack_5_index_3),
+                findViewById(R.id.GoldMiner_LAY_gameTrack_5_index_4),
+                findViewById(R.id.GoldMiner_LAY_gameTrack_5_index_5),
+                findViewById(R.id.GoldMiner_LAY_gameTrack_5_index_6),
+                findViewById(R.id.GoldMiner_LAY_gameTrack_5_index_7),
+                findViewById(R.id.GoldMiner_LAY_gameTrack_5_index_8)
         };
 
     }
@@ -161,9 +269,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void UI_changePositionOfMainCharacterIMG(int currentTrack, int newTrack) {
 
-        RelativeLayout currentRelativeLayout = gameTracksArray[6][currentTrack];
+        RelativeLayout currentRelativeLayout = gameTracksArray[7][currentTrack];
         currentRelativeLayout.removeView(GoldMiner_IMG_character);
-        RelativeLayout newRelativeLayout = gameTracksArray[6][newTrack];
+        RelativeLayout newRelativeLayout = gameTracksArray[7][newTrack];
         newRelativeLayout.addView(GoldMiner_IMG_character);
 
     }
@@ -184,8 +292,7 @@ public class MainActivity extends AppCompatActivity {
                     UI_addAllNewRunningObstacles();
                 }
                 if(gameManager.checkEndGame()) {
-                    isGameRunning = false;
-                    createNewGameFromLevel1();
+                    gameOver();
                 }
             }
         }, speedOfObjects); // Initial delay
@@ -275,9 +382,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         if(gameManager.getLife() == 0){
-            isGameRunning = false;
-            UI_removeAllRunningObstacles();
-            createNewGameFromLevel1();
+            gameOver();
         }
 
     }
@@ -310,17 +415,13 @@ public class MainActivity extends AppCompatActivity {
         GoldMiner_cardView_nextLevel.setVisibility(View.VISIBLE);
         GoldMiner_LBL_target.setText(String.valueOf(level.getTarget()));
         GoldMiner_LBL_main_levelView.setText(String.valueOf(gameManager.getCurrentLevel()));
-        GoldMiner_LBL_level.setText("Level :   " + gameManager.getCurrentLevel());
+        GoldMiner_LBL_level.setText("Level :   " + gameManager.getCurrentLevel() + "\n" + "MAX money :  " + ((level.getNumGold()*10) + (level.getNumDiamond()*500))+ "\n" + "Level Target :  " + level.getTarget());
         GoldMiner_LBL_money.setText(String.valueOf(gameManager.getMoney()));
         GoldMiner_LBL_level_TNT.setText(String.valueOf(level.getNumTNT()));
         GoldMiner_LBL_level_rock.setText(String.valueOf(level.getNumRock()));
         GoldMiner_LBL_level_gold.setText(String.valueOf(level.getNumGold()));
-        GoldMiner_LBL_level_moneyBag.setText(String.valueOf(level.getNumMoneyBag()));
+        GoldMiner_LBL_level_moneyBag.setText(String.valueOf(level.getNumDiamond()));
         //this.setSpeedOfObjects(speedOfObjects - 10*gameManager.getCurrentLevel());
-    }
-
-    public void setSpeedOfObjects(int speedOfObjects) {
-        this.speedOfObjects = speedOfObjects;
     }
 
     public void vibration() {
@@ -330,6 +431,48 @@ public class MainActivity extends AppCompatActivity {
             v.vibrate(VibrationEffect.createOneShot(VIBRATIONTIMING, VibrationEffect.DEFAULT_AMPLITUDE));
         } else {
             v.vibrate(VIBRATIONTIMING);
+        }
+
+    }
+
+    private void showCardOfEndGame(boolean gameOver){
+        if(gameOver){
+            MAIN_GAMEOVER_CARDVIEW.setVisibility(View.VISIBLE);
+        }else{
+            MAIN_GAMEOVER_CARDVIEW.setVisibility(View.INVISIBLE);
+        }
+
+    }
+
+    private void gameOver(){
+        isGameRunning = false;
+        GoldMiner_BTL_left.setVisibility(View.INVISIBLE);
+        GoldMiner_BTL_right.setVisibility(View.INVISIBLE);
+        showCardOfEndGame(true);
+        MAIN_LBLCARD_FINALSCORE.setText("Final lEVEL: " + gameManager.getCurrentLevel());
+        if(sensors)
+            sensorsManager.stop();
+
+    }
+
+
+    private void savePlayerScoreAndGoToPlayersActivity(){
+        if(MAIN_EDITTEXT_NAME.length() != 0){
+
+            Player newPlayer = new Player().setName(MAIN_EDITTEXT_NAME.getText().toString()).setScore(gameManager.getCurrentLevel()).setLat(lat).setLng(lng);
+            AllPlayers.getInstance().addPlayer(newPlayer);
+            AllPlayers.getInstance().sortPlayersByScore();
+
+            List<Player> topPlayers = AllPlayers.getInstance().getAllPlayersList().subList(0, Math.min(10, AllPlayers.getInstance().getAllPlayersList().size()));
+            Gson gson = new Gson();
+            String topPlayersJson = gson.toJson(topPlayers);
+            Intent intent = new Intent(this, ScoreBoard.class);
+            intent.putExtra("playerListJson", topPlayersJson);
+            startActivity(intent);
+            finish();
+
+        }else {
+            createToast("please add your name");
         }
 
     }

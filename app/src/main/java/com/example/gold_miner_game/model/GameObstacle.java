@@ -31,7 +31,6 @@ public class GameObstacle extends Character {
         return this.getPositionX() == obstacle.getPositionX() && this.getPositionY() == obstacle.getPositionY();
     }
 
-
     public ShapeableImageView getShapeableImageView() {
         return shapeableImageView;
     }

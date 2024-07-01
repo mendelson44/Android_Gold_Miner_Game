@@ -4,7 +4,7 @@ public class mainCharacter extends Character {
 
 
     public mainCharacter() {
-        super(1, 6);
+        super(1, 7);
     }
 
 

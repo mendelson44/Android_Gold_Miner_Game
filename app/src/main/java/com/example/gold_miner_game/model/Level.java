@@ -7,15 +7,15 @@ public class Level {
     private int numTNT;
     private int numRock;
     private int numGold;
-    private int numMoneyBag;
+    private int numDiamond;
 
 
-    public Level(int target, int numTNT, int numRock, int numGold, int numMoneyBag) {
+    public Level(int target, int numTNT, int numRock, int numGold, int numDiamond) {
         this.target = target;
         this.numTNT = numTNT;
         this.numRock = numRock;
         this.numGold = numGold;
-        this.numMoneyBag = numMoneyBag;
+        this.numDiamond = numDiamond;
     }
 
     public int getTarget() {
@@ -34,9 +34,7 @@ public class Level {
         return numGold;
     }
 
-    public int getNumMoneyBag() {
-        return numMoneyBag;
-    }
+    public int getNumDiamond() {return numDiamond;}
 
     public void setTarget(int target) {
         this.target = target;
@@ -54,7 +52,7 @@ public class Level {
         this.numGold = numGold;
     }
 
-    public void setNumMoneyBag(int numMoneyBag) {
-        this.numMoneyBag = numMoneyBag;
+    public void setNumDiamond(int numDiamond) {
+        this.numDiamond = numDiamond;
     }
 }

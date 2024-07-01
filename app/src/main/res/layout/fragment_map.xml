@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.MapFragment"
+    android:orientation="horizontal"
+    android:background="#12EAD8">
+
+<!---
+<com.google.android.material.textview.MaterialTextView
+    android:id="@+id/MAP_TEXT_HEADLINE"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    android:layout_alignParentTop="true"
+    android:text="Records Location "
+    android:textSize="30sp">
+
+</com.google.android.material.textview.MaterialTextView>
+-->
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/maps"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:name="com.google.android.gms.maps.SupportMapFragment"/>
+
+
+</RelativeLayout>
