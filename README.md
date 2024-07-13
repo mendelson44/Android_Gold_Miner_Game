@@ -1,4 +1,4 @@
-<h1><img src="https://github.com/mendelson44/Gold-Miner/assets/105666011/aa91d3ec-0d48-4e86-a87f-045392bd9d8f" alt=pic5 width="60" height="60"> Gotcha - [Product Warranty Tracker App]</h1>
+<h1><img src="https://github.com/mendelson44/Android_Gold_Miner_Game/assets/105666011/aa91d3ec-0d48-4e86-a87f-045392bd9d8f" alt=pic5 width="60" height="60"> Gotcha - [Product Warranty Tracker App]</h1>
 
 
 
