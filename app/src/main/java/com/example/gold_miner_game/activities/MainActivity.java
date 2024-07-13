@@ -23,10 +23,12 @@ import com.example.gold_miner_game.R;
 import com.example.gold_miner_game.logic.GameManager;
 import com.example.gold_miner_game.logic.SensorManager;
 import com.example.gold_miner_game.model.AllPlayers;
+import com.example.gold_miner_game.model.MyBackgroundMusic;
 import com.example.gold_miner_game.model.Player;
 import com.example.gold_miner_game.model.GameObstacle;
 import com.example.gold_miner_game.model.Level;
 import com.example.gold_miner_game.logic.CallBack_CharacterMovement;
+import com.example.gold_miner_game.model.SoundPlayer;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -86,12 +88,16 @@ public class MainActivity extends AppCompatActivity {
     private SensorManager sensorsManager;
     private GameManager gameManager;
     AllPlayers allPlayers;
+    private SoundPlayer soundPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+        MyBackgroundMusic.getInstance().setResourceId(R.raw.gold_miner_game_music);
+        soundPlayer = new SoundPlayer(this);
+
 
         findViews();
         getGameMode();
@@ -130,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
         if (slow) {
             speedOfObjects = 850;
         } else {
-            speedOfObjects = 750;
+            speedOfObjects = 650;
         }
         if (sensors) {
             initMovementSensors();
@@ -292,31 +298,38 @@ public class MainActivity extends AppCompatActivity {
                     UI_addAllNewRunningObstacles();
                 }
                 if(gameManager.checkEndGame()) {
-                    gameOver();
+                    isGameRunning = false;
+                    createNewGameFromCurrentLevel();
                 }
             }
         }, speedOfObjects); // Initial delay
     }
 
-    private void createNewGameFromLevel1() {
-        gameManager.setCurrentLevel(0);
-        gameManager.setLife(LIVES);
-        gameManager.setNumOfCollisions(0);
-        UI_resetHeartsImages();
-        UI_nextLevel(gameManager.nextLevel(this));
+    private void createNewGameFromCurrentLevel() {
+        gameManager.setLife(gameManager.getLife() - 1);
+        gameManager.setNumOfCollisions(gameManager.getNumOfCollisions() + 1);
+
+        if(gameManager.getLife() == 0) {
+            gameOver();
+        }else {
+            gameManager.setCurrentLevel(gameManager.getCurrentLevel() - 1);
+            refreshHeartImages();
+            UI_nextLevel(gameManager.nextLevel(this));
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        MyBackgroundMusic.getInstance().pauseMusic();
         isGameRunning = false;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        MyBackgroundMusic.getInstance().playMusic();
         if (!isGameRunning) {
-            isGameRunning = true;
             startGame();
         }
     }
@@ -369,10 +382,11 @@ public class MainActivity extends AppCompatActivity {
             refreshHeartImages();
             vibration();
             createToast("I need more Gold");
+            soundPlayer.playSound(R.raw.gold_miner_lossing_music);
         }
         if (collisionType == 2) { //collision type 2 for good obstacle
             GoldMiner_LBL_money.setText(String.valueOf(gameManager.getMoney()));
-
+            soundPlayer.playSound(R.raw.gold_miner_gold_collect_music);
         }
         if(gameManager.getMoney() >= gameManager.getTarget()){
             isGameRunning = false;
@@ -385,13 +399,6 @@ public class MainActivity extends AppCompatActivity {
             gameOver();
         }
 
-    }
-
-    private void UI_resetHeartsImages() {
-
-        for (int i = 0 ; i < LIVES ; i++) {
-            GoldMiner_IMG_hearts[i].setVisibility(View.VISIBLE);
-        }
     }
 
     public void refreshHeartImages() {
@@ -415,13 +422,12 @@ public class MainActivity extends AppCompatActivity {
         GoldMiner_cardView_nextLevel.setVisibility(View.VISIBLE);
         GoldMiner_LBL_target.setText(String.valueOf(level.getTarget()));
         GoldMiner_LBL_main_levelView.setText(String.valueOf(gameManager.getCurrentLevel()));
-        GoldMiner_LBL_level.setText("Level :   " + gameManager.getCurrentLevel() + "\n" + "MAX money :  " + ((level.getNumGold()*10) + (level.getNumDiamond()*500))+ "\n" + "Level Target :  " + level.getTarget());
+        GoldMiner_LBL_level.setText("LEVEL   " + gameManager.getCurrentLevel());
         GoldMiner_LBL_money.setText(String.valueOf(gameManager.getMoney()));
         GoldMiner_LBL_level_TNT.setText(String.valueOf(level.getNumTNT()));
         GoldMiner_LBL_level_rock.setText(String.valueOf(level.getNumRock()));
         GoldMiner_LBL_level_gold.setText(String.valueOf(level.getNumGold()));
         GoldMiner_LBL_level_moneyBag.setText(String.valueOf(level.getNumDiamond()));
-        //this.setSpeedOfObjects(speedOfObjects - 10*gameManager.getCurrentLevel());
     }
 
     public void vibration() {
@@ -454,7 +460,6 @@ public class MainActivity extends AppCompatActivity {
             sensorsManager.stop();
 
     }
-
 
     private void savePlayerScoreAndGoToPlayersActivity(){
         if(MAIN_EDITTEXT_NAME.length() != 0){

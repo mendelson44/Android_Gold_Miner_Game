@@ -22,10 +22,8 @@ public class ScoreBoard extends AppCompatActivity {
 
     private ListFragment listFragment;
     private MapFragment mapFragment;
-    private FrameLayout playerBoard_FRAME_list;
-    private FrameLayout playerBoard_FRAME_map;
-
-
+    private FrameLayout GoldMiner_frameList_score_board;
+    private FrameLayout GoldMiner_frameMap_score_board;
 
 
     @Override
@@ -41,8 +39,6 @@ public class ScoreBoard extends AppCompatActivity {
         Log.d("InFragment", "getDataFromLastActivity: " + playerList.toString());
 
 
-
-
         listFragment = new ListFragment(playerList);
         listFragment.setCallBackPlayerScoreClicked(new CallBack_playerScoreClicked() {
             @Override
@@ -53,13 +49,13 @@ public class ScoreBoard extends AppCompatActivity {
 
 
         mapFragment = new MapFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.playerBoard_FRAME_list,listFragment).commit();
-        getSupportFragmentManager().beginTransaction().add(R.id.playerBoard_FRAME_map,mapFragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.GoldMiner_frameList_score_board,listFragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.GoldMiner_frameMap_score_board,mapFragment).commit();
 
     }
 
     private void findViews(){
-        playerBoard_FRAME_list = findViewById(R.id.playerBoard_FRAME_list);
-        playerBoard_FRAME_map = findViewById(R.id.playerBoard_FRAME_map);
+        GoldMiner_frameList_score_board = findViewById(R.id.GoldMiner_frameList_score_board);
+        GoldMiner_frameMap_score_board = findViewById(R.id.GoldMiner_frameMap_score_board);
     }
 }

@@ -29,7 +29,7 @@ public class GameManager {
     private Stack<GameObstacle> gameObstacles;
     private Set<GameObstacle> runningObstacles;
     private int numberOfRunningObstacles = 0;
-    private int maxNumberOfGameObstacles = 4;
+    private int maxNumberOfGameObstacles = 6;
     private int numOfCollisions = 0;
     private int collisionType = 0;
     private Level[] levels;
@@ -151,8 +151,8 @@ public class GameManager {
 
         Context prefs = context.getApplicationContext();
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-                256,
-                256);
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
 
         int[] level = getCurrentLevelArray();
 

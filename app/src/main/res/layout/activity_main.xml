@@ -8,10 +8,8 @@
     android:background="@drawable/gold_miner_top_main_background"
     tools:context=".activities.MainActivity">
 
-    <!--- score layout -->
 
 
-    <!--- heart layout -->
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/GoldMiner_LAY_scoreLayout"
         android:layout_width="188dp"
@@ -102,6 +100,7 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
+    <!--- heart layout -->
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/GoldMiner_LAY_heartLayout"
         android:layout_width="88dp"
@@ -713,7 +712,7 @@
             android:id="@+id/GoldMiner_LAY_level"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/gold_miner_grass"
+            android:background="@drawable/gold_miner_level_background"
             android:layout_gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -721,18 +720,22 @@
                 android:id="@+id/GoldMiner_LAY_level_index_1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_weight="0.70">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/GoldMiner_LBL_level"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:text="level"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="72dp"
+                    android:text="LEVEL"
+                    android:textColor="#FFD700"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="10"
+                    android:shadowDy="10"
+                    android:shadowRadius="8"
+                    android:textSize="24sp"
+                    android:textStyle="bold"/>
 
             </RelativeLayout>
 
@@ -740,13 +743,13 @@
                 android:id="@+id/GoldMiner_LAY_level_index_2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_weight="0.4">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/GoldMiner_LAY_level_goldAndMoney"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_marginHorizontal="58dp"
                     android:orientation="horizontal">
 
                     <com.google.android.material.imageview.ShapeableImageView
@@ -762,10 +765,15 @@
                         android:layout_width="0dp"
                         android:layout_height="44dp"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:text="100"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/white"
+                        android:shadowColor="@color/black"
+                        android:shadowDx="2"
+                        android:shadowDy="6"
+                        android:shadowRadius="8"
+                        android:textSize="15sp"
+                        android:textStyle="bold"/>
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/GoldMiner_IMG_level_moneyBag"
@@ -780,9 +788,14 @@
                         android:layout_width="0dp"
                         android:layout_height="44dp"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:text="100"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
+                        android:textColor="@color/white"
+                        android:shadowColor="@color/black"
+                        android:shadowDx="2"
+                        android:shadowDy="6"
+                        android:shadowRadius="8"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -793,14 +806,15 @@
                 android:id="@+id/GoldMiner_LAY_level_index_3"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_weight="0.4">
 
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/GoldMiner_LAY_level_rockAndTNT"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginHorizontal="58dp"
                     android:orientation="horizontal">
 
                     <com.google.android.material.imageview.ShapeableImageView
@@ -816,9 +830,14 @@
                         android:layout_width="0dp"
                         android:layout_height="44dp"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:text="100"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
+                        android:textColor="@color/white"
+                        android:shadowColor="@color/black"
+                        android:shadowDx="2"
+                        android:shadowDy="6"
+                        android:shadowRadius="8"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
 
                     <com.google.android.material.imageview.ShapeableImageView
@@ -834,9 +853,14 @@
                         android:layout_width="0dp"
                         android:layout_height="44dp"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:text="100"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
+                        android:textColor="@color/white"
+                        android:shadowColor="@color/black"
+                        android:shadowDx="2"
+                        android:shadowDy="6"
+                        android:shadowRadius="8"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -851,16 +875,13 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/GoldMiner_BTL_level_continue"
-                    android:layout_width="120dp"
-                    android:layout_height="60dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:text="CONTINUE"
-                    android:textSize="8sp"
-                    app:cornerRadius="10dp"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton">
+                    android:layout_width="80dp"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="95dp"
+                    app:cornerRadius="8dp"
+                    android:textColor="#FFFFFF"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
 
-                </com.google.android.material.button.MaterialButton>
 
             </RelativeLayout>
 

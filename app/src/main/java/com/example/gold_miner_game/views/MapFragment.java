@@ -33,7 +33,7 @@ public class MapFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_map, container, false);
-        SupportMapFragment supportMapFragment = ((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.maps));
+        SupportMapFragment supportMapFragment = ((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.GoldMiner_fragmentMap_scoreBoard));
         supportMapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(@NonNull GoogleMap googleMap) {
@@ -47,25 +47,23 @@ public class MapFragment extends Fragment {
         return view;
     }
 
-   public void zoom(double lat , double lon){
-       changeCamera(lat,lon);
+   public void zoom(double lat , double lng){
+       changeCamera(lat,lng);
     }
 
-    public void changeCamera(double lat, double lon) {
+    public void changeCamera(double lat, double lng) {
         if (gMap != null) {
-            LatLng location = new LatLng(lat, lon);
+            LatLng location = new LatLng(lat, lng);
             gMap.clear(); // Clear existing markers
             gMap.addMarker(new MarkerOptions().position(location).title("New Location"));
             //gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15));
             CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(new LatLng(lat, lon))
+                    .target(new LatLng(lat, lng))
                     .zoom(15)
                     .build();
             gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
         }
     }
-
-
 }
 

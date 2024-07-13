@@ -10,14 +10,14 @@
     android:background="@drawable/gold_miner_top_main_background">
 
     <FrameLayout
-        android:id="@+id/playerBoard_FRAME_list"
+        android:id="@+id/GoldMiner_frameList_score_board"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:padding="5dp" />
 
     <FrameLayout
-        android:id="@+id/playerBoard_FRAME_map"
+        android:id="@+id/GoldMiner_frameMap_score_board"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

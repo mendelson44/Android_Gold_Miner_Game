@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import com.example.gold_miner_game.R;
 import com.example.gold_miner_game.model.AllPlayers;
+import com.example.gold_miner_game.model.MyBackgroundMusic;
 import com.example.gold_miner_game.model.Player;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -48,6 +49,7 @@ public class MainMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+        MyBackgroundMusic.getInstance().setResourceId(R.raw.gold_miner_main_menu_music);
 
         locationPermission();
         findViewsById();
@@ -56,6 +58,18 @@ public class MainMenu extends AppCompatActivity {
         GoldMiner_Main_Menu_BTN_mode_sensors.setOnClickListener(v -> sensorsButtonClicked());
         GoldMiner_Main_Menu_BTN_startGame.setOnClickListener(v -> startGame());
         GoldMiner_Main_Menu_BTN_scoreBoard.setOnClickListener(v -> view_Score_Board());
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MyBackgroundMusic.getInstance().pauseMusic();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MyBackgroundMusic.getInstance().playMusic();
     }
 
     private void findViewsById(){
@@ -107,6 +121,7 @@ public class MainMenu extends AppCompatActivity {
 
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("jsonString", jsonString);
+        MyBackgroundMusic.getInstance().pauseMusic();
         startActivity(intent);
 
     }
@@ -149,6 +164,7 @@ public class MainMenu extends AppCompatActivity {
         String topPlayersJson = gson.toJson(topPlayers);
         Intent intent = new Intent(this, ScoreBoard.class);
         intent.putExtra("playerListJson", topPlayersJson);
+        MyBackgroundMusic.getInstance().pauseMusic();
         startActivity(intent);
 
     }

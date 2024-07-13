@@ -24,7 +24,7 @@ public class ListFragment extends Fragment {
 
 
     private CallBack_playerScoreClicked callBackPlayerScoreClicked;
-    private RecyclerView ListFragment_RCV_PLAYERBOARD;
+    private RecyclerView GoldMiner_fragmentList_RCV_scoreBoard;
     private ArrayList<Player> playerList;
 
 
@@ -44,10 +44,10 @@ public class ListFragment extends Fragment {
 
 
 
-    private void playerClicked(double lat, double lon ) {
+    private void playerClicked(double lat, double lng ) {
         if(callBackPlayerScoreClicked != null) {
-            Log.d("TAG", "playerClicked: IM HERE" + lat + lon);
-            callBackPlayerScoreClicked.playerScoreClicked(lat, lon);
+            Log.d("TAG", "playerClicked: IM HERE" + lat + lng);
+            callBackPlayerScoreClicked.playerScoreClicked(lat, lng);
         }
 
     }
@@ -55,8 +55,8 @@ public class ListFragment extends Fragment {
         PlayerAdapter playerAdapter = new PlayerAdapter(getActivity().getApplicationContext(),playerList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-        ListFragment_RCV_PLAYERBOARD.setLayoutManager(linearLayoutManager);
-        ListFragment_RCV_PLAYERBOARD.setAdapter(playerAdapter);
+        GoldMiner_fragmentList_RCV_scoreBoard.setLayoutManager(linearLayoutManager);
+        GoldMiner_fragmentList_RCV_scoreBoard.setAdapter(playerAdapter);
 
         playerAdapter.setPlayerLocation(new CallBack_playerLocation(){
             @Override
@@ -70,7 +70,7 @@ public class ListFragment extends Fragment {
 
     }
     private void findViews(View view){
-        ListFragment_RCV_PLAYERBOARD = view.findViewById(R.id.ListFragment_RCV_PLAYERBOARD);
+        GoldMiner_fragmentList_RCV_scoreBoard = view.findViewById(R.id.GoldMiner_fragmentList_RCV_scoreBoard);
     }
 
     public void setCallBackPlayerScoreClicked(CallBack_playerScoreClicked callBackPlayerScoreClicked) {

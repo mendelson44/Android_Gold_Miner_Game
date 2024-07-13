@@ -25,7 +25,6 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
     Map<Integer, Integer> placeMedalImages = new HashMap<>();
 
 
-
     //callback
 
     public PlayerAdapter(Context context, ArrayList<Player> allPlayersList) {
@@ -46,7 +45,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
     @NonNull
     @Override
     public PlayerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_row_player_score, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_player_score_board, parent, false);
         return new PlayerViewHolder(view);
     }
 

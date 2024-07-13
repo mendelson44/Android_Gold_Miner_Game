@@ -22,11 +22,9 @@
 -->
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/maps"
+        android:id="@+id/GoldMiner_fragmentMap_scoreBoard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:name="com.google.android.gms.maps.SupportMapFragment"/>
-
 
 </RelativeLayout>

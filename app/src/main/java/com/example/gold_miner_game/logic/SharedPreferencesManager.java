@@ -14,7 +14,11 @@ public class SharedPreferencesManager {
 
     public static void init(Context context) {
             if (instance == null) {
-                instance = new SharedPreferencesManager(context);
+                synchronized (SharedPreferencesManager.class) {
+                    if (instance == null) {
+                        instance = new SharedPreferencesManager(context);
+                    }
+                }
             }
     }
 
